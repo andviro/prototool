@@ -86,6 +86,16 @@ COPY internal /tmp/prototool/internal
 RUN cd /tmp/prototool && go install ./cmd/prototool
 RUN cp /go/bin/prototool /usr/local/bin/prototool
 
+RUN git clone --depth 1 https://github.com/infobloxopen/protoc-gen-gorm.git /go/src/github.com/infobloxopen/protoc-gen-gorm
+RUN cd /go/src/github.com/infobloxopen/protoc-gen-gorm && \
+  env GO111MODULE=on go install
+RUN cp /go/bin/protoc-gen-gorm /usr/local/bin/
+
+RUN git clone --depth 1 https://github.com/moul/protoc-gen-gotemplate.git /go/src/github.com/moul/protoc-gen-gotemplate
+RUN cd /go/src/github.com/moul/protoc-gen-gotemplate && \
+  env GO111MODULE=on go install
+RUN cp /go/bin/protoc-gen-gotemplate /usr/local/bin/
+
 FROM alpine:edge
 
 ENV GOGO_PROTOBUF_VERSION=1.2.0
